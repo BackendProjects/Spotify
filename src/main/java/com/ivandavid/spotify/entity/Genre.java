@@ -18,13 +18,13 @@ public class Genre {
     private Long id;
     private String name;
 
-    @ManyToMany
-    /*@JoinTable(
+     /*@ManyToMany
+   @JoinTable(
             name = "genre_track",
             joinColumns = @JoinColumn(name = "genre_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id")
-    )*/
-    private List<Track> tracks;
+    )
+    private List<Track> tracks;*/
 
     public Genre(String name) {
         this.name = name;
