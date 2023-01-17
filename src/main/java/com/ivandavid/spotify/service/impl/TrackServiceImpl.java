@@ -32,6 +32,7 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public List<TrackDTO> findAll() {
         List<Track> tracks = trackRepository.findAll();
+        if (tracks.isEmpty()) return null;
         List<TrackDTO> trackDTOS = new ArrayList<>();
         for (Track track : tracks)
             trackDTOS.add(TrackDTO.fromEntity(track));
@@ -48,29 +49,24 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDTO update(Long id, TrackDTO dto) {
         Optional<Track> track = trackRepository.findById(id);
-        if (track.isPresent()) {
-            track.get().setName(dto.getName());
-            track.get().setDuration(dto.getDuration());
-            track.get().setReleasedDate(dto.getReleasedDate());
-            return TrackDTO.fromEntity(track.get());
-        }
-        return null;
+        if (track.isEmpty()) return null;
+        track.get().setName(dto.getName());
+        track.get().setDuration(dto.getDuration());
+        track.get().setReleasedDate(dto.getReleasedDate());
+        return TrackDTO.fromEntity(track.get());
     }
 
     @Override
     public TrackDTO updateDuration(Long id, Long duration) {
         Optional<Track> track = trackRepository.findById(id);
-        if (track.isPresent()) {
-            track.get().setDuration(duration);
-            return TrackDTO.fromEntity(track.get());
-        }
-        return null;
+        if (track.isEmpty()) return null;
+        track.get().setDuration(duration);
+        return TrackDTO.fromEntity(track.get());
     }
 
     @Override
     public void delete(Long id) {
         trackRepository.deleteById(id);
     }
-
 
 }
