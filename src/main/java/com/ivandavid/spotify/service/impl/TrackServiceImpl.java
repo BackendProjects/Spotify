@@ -32,7 +32,8 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public List<TrackDTO> findAll() {
         List<Track> tracks = trackRepository.findAll();
-        if (tracks.isEmpty()) return null;
+        if (tracks.isEmpty())
+            return null;
         List<TrackDTO> trackDTOS = new ArrayList<>();
         for (Track track : tracks)
             trackDTOS.add(TrackDTO.fromEntity(track));
@@ -42,14 +43,16 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDTO findById(Long id) {
         Optional<Track> track = trackRepository.findById(id);
-        if (track.isEmpty()) return null;
+        if (track.isEmpty())
+            return null;
         return TrackDTO.fromEntity(track.get());
     }
 
     @Override
     public TrackDTO update(Long id, TrackDTO dto) {
         Optional<Track> track = trackRepository.findById(id);
-        if (track.isEmpty()) return null;
+        if (track.isEmpty())
+            return null;
         track.get().setName(dto.getName());
         track.get().setDuration(dto.getDuration());
         track.get().setReleasedDate(dto.getReleasedDate());
@@ -59,7 +62,8 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDTO updateDuration(Long id, Long duration) {
         Optional<Track> track = trackRepository.findById(id);
-        if (track.isEmpty()) return null;
+        if (track.isEmpty())
+            return null;
         track.get().setDuration(duration);
         return TrackDTO.fromEntity(track.get());
     }
