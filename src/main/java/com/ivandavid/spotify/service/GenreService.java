@@ -12,8 +12,8 @@ public interface GenreService {
 
     GenreDTO findById(Long id);
 
-    GenreDTO updateById(Long id, GenreDTO dto);
-    GenreDTO updateNameById(Long id, String name);
+    GenreDTO update(Long id, GenreDTO dto);
+    GenreDTO updateName(Long id, String name);
 
     void deleteById(Long id);
 

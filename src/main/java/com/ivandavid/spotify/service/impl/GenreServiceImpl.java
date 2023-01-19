@@ -29,6 +29,8 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public List<GenreDTO> findAll() {
         List<Genre> genres = genreRepository.findAll();
+        if (genres.isEmpty())
+            return null;
         List<GenreDTO> genresDTO = new ArrayList<>();
         for (Genre g : genres)
             genresDTO.add(GenreDTO.fromEntity(g));
@@ -44,21 +46,21 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public GenreDTO updateById(Long id, GenreDTO dto) {
-        Genre genre = genreRepository.findById(id).
-                orElseThrow(() -> new RuntimeException("Genre id " + id + " not valid!"));
-        genre.setName(dto.getName());
-        genreRepository.save(genre);
-        return GenreDTO.fromEntity(genre);
+    public GenreDTO update(Long id, GenreDTO dto) {
+        Optional<Genre> genre = genreRepository.findById(id);
+        if (genre.isEmpty())
+            return null;
+        genre.get().setName(dto.getName());
+        return GenreDTO.fromEntity(genre.get());
     }
 
     @Override
-    public GenreDTO updateNameById(Long id, String name) {
-        Genre genre = genreRepository.findById(id).
-                orElseThrow(() -> new RuntimeException("Genre id " + id + " not valid!"));
-        genre.setName(name);
-        genreRepository.save(genre);
-        return GenreDTO.fromEntity(genre);
+    public GenreDTO updateName(Long id, String name) {
+        Optional<Genre> genre = genreRepository.findById(id);
+        if (genre.isEmpty())
+            return null;
+        genre.get().setName(name);
+        return GenreDTO.fromEntity(genre.get());
     }
 
     @Override

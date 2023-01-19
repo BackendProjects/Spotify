@@ -24,7 +24,10 @@ public class GenreController {
 
     @GetMapping
     public ResponseEntity<List<GenreDTO>> findAll() {
-        return ResponseEntity.ok(genreService.findAll());
+        List<GenreDTO> genreDTOS = genreService.findAll();
+        if (genreDTOS == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok(genreDTOS);
     }
 
     @GetMapping("/{id}")
@@ -36,13 +39,13 @@ public class GenreController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GenreDTO> updateById(@PathVariable Long id, @RequestBody GenreDTO dto) {
-        return ResponseEntity.ok((genreService.updateById(id, dto)));
+    public ResponseEntity<GenreDTO> update(@PathVariable Long id, @RequestBody GenreDTO dto) {
+        return ResponseEntity.ok((genreService.update(id, dto)));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<GenreDTO> updateNameById(@PathVariable Long id, @RequestParam String name) {
-        return ResponseEntity.ok(genreService.updateNameById(id, name));
+    public ResponseEntity<GenreDTO> updateName(@PathVariable Long id, @RequestParam String name) {
+        return ResponseEntity.ok(genreService.updateName(id, name));
     }
 
     @DeleteMapping("/{id}")
