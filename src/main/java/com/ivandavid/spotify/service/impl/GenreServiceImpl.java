@@ -21,7 +21,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDTO create(GenreDTO dto) {
-        Genre genre = new Genre(dto.getName());
+        Genre genre = new Genre(dto.getName(), dto.getTrackId());
         Genre storedGenre = genreRepository.save(genre);
         return GenreDTO.fromEntity(storedGenre);
     }

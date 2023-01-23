@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.sound.midi.Track;
 import java.util.List;
 
 @Entity
@@ -17,17 +16,19 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private Long trackId;
 
-     /*@ManyToMany
-   @JoinTable(
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
             name = "genre_track",
-            joinColumns = @JoinColumn(name = "genre_id"),
-            inverseJoinColumns = @JoinColumn(name = "member_id")
+            joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id")
     )
-    private List<Track> tracks;*/
+    private List<Track> tracks;
 
-    public Genre(String name) {
+    public Genre(String name, Long trackId) {
         this.name = name;
+        this.trackId = trackId;
     }
 
     public static Genre fromDTO(GenreDTO dto) {
