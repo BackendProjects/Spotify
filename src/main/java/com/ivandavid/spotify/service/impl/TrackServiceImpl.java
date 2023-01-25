@@ -4,6 +4,7 @@ import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.entity.Track;
+import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
 import com.ivandavid.spotify.service.TrackService;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,15 @@ import java.util.Optional;
 public class TrackServiceImpl implements TrackService {
 
     private final TrackRepository trackRepository;
+    private final GenreRepository genreRepository;
 
     @Override
     public TrackDTO create(TrackDTO dto) {
+        var genres = dto.getGenreIds().stream().map(id -> genreRepository.findById(id).get()).toList();
         Track track = new Track(
                 dto.getName(),
-                dto.getDuration()
+                dto.getDuration(),
+                genres
         );
         Track storedTrack = trackRepository.save(track);
         return TrackDTO.fromEntity(storedTrack);

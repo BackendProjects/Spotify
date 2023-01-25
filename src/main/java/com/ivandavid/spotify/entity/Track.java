@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class Track {
 
     public Track(String name,
                  Long duration,
-                 List<Genre> genres/*,
+                 @NotNull List<Genre> genres/*,
                  User artist*/) {
         this.name = name;
         this.duration = duration;
@@ -50,6 +51,7 @@ public class Track {
                  Long duration) {
         this.name = name;
         this.duration = duration;
+        this.genres = new ArrayList<>();
         //this.artist = artist;
     }
 

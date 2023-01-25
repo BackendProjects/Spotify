@@ -2,8 +2,11 @@ package com.ivandavid.spotify.service.impl;
 
 import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.entity.Genre;
+import com.ivandavid.spotify.entity.Track;
 import com.ivandavid.spotify.repository.GenreRepository;
+import com.ivandavid.spotify.repository.TrackRepository;
 import com.ivandavid.spotify.service.GenreService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +19,16 @@ public class GenreServiceImpl implements GenreService {
 
     @Autowired
     private GenreRepository genreRepository;
-
-    /*public GenreServiceImpl(GenreRepository genreRepository) {
-        this.genreRepository = genreRepository;
-    }*/
+    @Autowired
+    private TrackRepository trackRepository;
 
     @Override
     public GenreDTO create(GenreDTO dto) {
-        Genre genre = new Genre(dto.getName());
+        var tracks = dto.getTrackIds().stream().map(id -> trackRepository.findById(id).get()).toList();
+        Genre genre = new Genre(
+                dto.getName(),
+                tracks
+        );
         Genre storedGenre = genreRepository.save(genre);
         return GenreDTO.fromEntity(storedGenre);
     }

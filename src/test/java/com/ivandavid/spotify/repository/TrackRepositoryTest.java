@@ -37,9 +37,16 @@ class TrackRepositoryTest {
         genresForTrack2.add(genre3);
         genresForTrack2.add(genre5);
 
+        var genre6 = genreRepository.findById(7L).get();
+        var genre7 = genreRepository.findById(9L).get();
+        var genresForTrack3 = new ArrayList<Genre>();
+        genresForTrack2.add(genre6);
+        genresForTrack2.add(genre7);
+
         List<Track> tracks = List.of(
                 new Track("song1", 400L, genresForTrack1),
-                new Track("song2", 410L, genresForTrack2)
+                new Track("song2", 410L, genresForTrack2),
+                new Track("song3", 410L, genresForTrack3)
         );
         trackRepository.saveAll(tracks);
     }
@@ -47,7 +54,7 @@ class TrackRepositoryTest {
     @Test
     void test_prueba() {
         var numTracks = trackRepository.findAll().size();
-        Assertions.assertEquals(2, numTracks);
+        Assertions.assertEquals(3, numTracks);
     }
 
     @AfterEach

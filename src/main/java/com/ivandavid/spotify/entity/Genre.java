@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,8 +21,14 @@ public class Genre {
     @ManyToMany(mappedBy = "genres")
     private List<Track> tracks;
 
+    public Genre(String name, List<Track> tracks) {
+        this.name = name;
+        this.tracks = tracks;
+    }
+
     public Genre(String name) {
         this.name = name;
+        this.tracks = new ArrayList<>();
     }
 
     public static Genre fromDTO(GenreDTO dto) {

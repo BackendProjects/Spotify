@@ -27,7 +27,12 @@ class GenreRepositoryTest {
                 new Genre("Genre2"),
                 new Genre("Genre3"),
                 new Genre("Genre4"),
-                new Genre("Genre5")
+                new Genre("Genre5"),
+                new Genre("Genre6"),
+                new Genre("Genre7"),
+                new Genre("Genre8"),
+                new Genre("Genre9"),
+                new Genre("Genre10")
         );
         genreRepository.saveAll(genres);
     }
@@ -35,7 +40,7 @@ class GenreRepositoryTest {
     @Test
     void test_prueba() {
         var numGenres = genreRepository.findAll().size();
-        Assertions.assertEquals(5, numGenres);
+        Assertions.assertEquals(10, numGenres);
     }
 
     @AfterEach
