@@ -16,25 +16,17 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Long trackId;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "genre_track",
-            joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id")
-    )
+    @ManyToMany(mappedBy = "genres")
     private List<Track> tracks;
 
-    public Genre(String name, Long trackId) {
+    public Genre(String name) {
         this.name = name;
-        this.trackId = trackId;
     }
 
     public static Genre fromDTO(GenreDTO dto) {
         Genre genre = new Genre();
         genre.setName(dto.getName());
-        genre.setId(dto.getId());
         return genre;
     }
 }

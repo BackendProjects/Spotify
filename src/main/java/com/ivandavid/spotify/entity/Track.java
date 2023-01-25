@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,12 +27,27 @@ public class Track {
     /*@ManyToOne(optional = false)
     private User artist;*/
 
-    @ManyToMany(mappedBy = "tracks")
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "track_genre",
+            joinColumns = @JoinColumn(name = "track_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id")
+    )
     private List<Genre> genres;
 
     public Track(String name,
-                 Long duration/*,
+                 Long duration,
+                 List<Genre> genres/*,
                  User artist*/) {
+        this.name = name;
+        this.duration = duration;
+        this.genres = genres;
+        //this.artist = artist;
+    }
+
+    public Track(String name,
+                 Long duration) {
         this.name = name;
         this.duration = duration;
         //this.artist = artist;

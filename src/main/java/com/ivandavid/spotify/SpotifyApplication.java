@@ -11,22 +11,27 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
 
 @SpringBootApplication
-public class SpotifyApplication implements CommandLineRunner {
+public class SpotifyApplication /*implements CommandLineRunner*/ {
 
-    private final TrackRepository trackRepository;
+    /*private final TrackRepository trackRepository;
     private final GenreRepository genreRepository;
 
     public SpotifyApplication(TrackRepository trackRepository, GenreRepository genreRepository) {
         this.trackRepository = trackRepository;
         this.genreRepository = genreRepository;
-    }
+    }*/
 
     public static void main(String[] args) {
         SpringApplication.run(SpotifyApplication.class, args);
     }
 
-    @Override
+    /*@Override
     public void run(String... args) throws Exception {
+
+
+
+
+
         trackRepository.deleteAll();
         var tracks = List.of(
                 new Track("song1", 400L),
@@ -38,5 +43,5 @@ public class SpotifyApplication implements CommandLineRunner {
         var genre = new Genre("genre1", 2L);
         genreRepository.save(genre);
 
-    }
+    }*/
 }

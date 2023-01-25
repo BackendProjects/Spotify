@@ -4,6 +4,7 @@ import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.service.GenreService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,15 +14,16 @@ import java.util.Optional;
 @Service
 public class GenreServiceImpl implements GenreService {
 
-    private final GenreRepository genreRepository;
+    @Autowired
+    private GenreRepository genreRepository;
 
-    public GenreServiceImpl(GenreRepository genreRepository) {
+    /*public GenreServiceImpl(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
-    }
+    }*/
 
     @Override
     public GenreDTO create(GenreDTO dto) {
-        Genre genre = new Genre(dto.getName(), dto.getTrackId());
+        Genre genre = new Genre(dto.getName());
         Genre storedGenre = genreRepository.save(genre);
         return GenreDTO.fromEntity(storedGenre);
     }
