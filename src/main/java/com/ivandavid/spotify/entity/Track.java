@@ -56,7 +56,7 @@ public class Track {
     }
 
     public static Track fromDTO(TrackDTO dto) {
-        Track track = new Track();
+        var track = new Track();
         track.setName(dto.getName());
         track.setDuration(dto.getDuration());
         track.setReleasedDate(dto.getReleasedDate());

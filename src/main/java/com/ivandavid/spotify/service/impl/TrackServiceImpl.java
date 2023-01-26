@@ -1,13 +1,10 @@
 package com.ivandavid.spotify.service.impl;
 
-import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.DTO.TrackDTO;
-import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.entity.Track;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
 import com.ivandavid.spotify.service.TrackService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,11 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class TrackServiceImpl implements TrackService {
 
     private final TrackRepository trackRepository;
     private final GenreRepository genreRepository;
+
+    public TrackServiceImpl(TrackRepository trackRepository, GenreRepository genreRepository) {
+        this.trackRepository = trackRepository;
+        this.genreRepository = genreRepository;
+    }
 
     @Override
     public TrackDTO create(TrackDTO dto) {

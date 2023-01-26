@@ -19,7 +19,7 @@ public class GenreDTO {
     private List<Long> trackIds;
 
     public static GenreDTO fromEntity(Genre genre) {
-        GenreDTO genreDTO = new GenreDTO();
+        var genreDTO = new GenreDTO();
         genreDTO.setName(genre.getName());
         genreDTO.setId(genre.getId());
 
