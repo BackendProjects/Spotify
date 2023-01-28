@@ -1,6 +1,7 @@
 package com.ivandavid.spotify.controller;
 
 import com.ivandavid.spotify.DTO.GenreDTO;
+import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.service.GenreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,14 @@ public class GenreController {
         if (genreDTO == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(genreService.findById(id));
+    }
+
+    @GetMapping("/{id}/tracks")
+    public ResponseEntity<List<TrackDTO>> findTracksById(@PathVariable Long id) {
+        var TracksDTOs = genreService.findTracksByGenreId(id);
+        if (TracksDTOs == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok(TracksDTOs);
     }
 
     @PutMapping("/{id}")

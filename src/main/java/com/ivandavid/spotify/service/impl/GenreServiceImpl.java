@@ -1,10 +1,14 @@
 package com.ivandavid.spotify.service.impl;
 
 import com.ivandavid.spotify.DTO.GenreDTO;
+import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
+import com.ivandavid.spotify.entity.Track;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
 import com.ivandavid.spotify.service.GenreService;
+import com.ivandavid.spotify.service.TrackService;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,10 +20,12 @@ public class GenreServiceImpl implements GenreService {
 
     private GenreRepository genreRepository;
     private TrackRepository trackRepository;
+    private TrackService trackService;
 
-    public GenreServiceImpl(GenreRepository genreRepository, TrackRepository trackRepository) {
+    public GenreServiceImpl(GenreRepository genreRepository, TrackRepository trackRepository, TrackService trackService) {
         this.genreRepository = genreRepository;
         this.trackRepository = trackRepository;
+        this.trackService = trackService;
     }
 
     @Override
@@ -50,6 +56,16 @@ public class GenreServiceImpl implements GenreService {
         if (genre.isEmpty())
             return null;
         return GenreDTO.fromEntity(genre.get());
+    }
+
+    @Override
+    public List<TrackDTO> findTracksByGenreId(Long genreId) {
+        var genre = genreRepository.findById(genreId).get();
+        var tracks = trackService.findTracksByGenre(genre);
+        var trackDTOs = new ArrayList<TrackDTO>();
+        for (Track t : tracks)
+            trackDTOs.add(TrackDTO.fromEntity(t));
+        return trackDTOs;
     }
 
     @Override
