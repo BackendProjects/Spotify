@@ -40,11 +40,10 @@ class TrackRepositoryTest {
         genresForTrack1.add(genre8);
 
         var genresForTrack2 = new ArrayList<Genre>();
-        genresForTrack2.add(genre2);
-        genresForTrack2.add(genre3);
+        genresForTrack2.add(genre1);
         genresForTrack2.add(genre4);
         genresForTrack2.add(genre5);
-        genresForTrack2.add(genre6);
+        genresForTrack2.add(genre7);
 
         var genresForTrack3 = new ArrayList<Genre>();
         genresForTrack3.add(genre3);
