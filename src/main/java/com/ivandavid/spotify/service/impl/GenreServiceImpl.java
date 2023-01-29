@@ -4,16 +4,15 @@ import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.entity.Track;
+import com.ivandavid.spotify.exception.GenreNotFoundException;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
 import com.ivandavid.spotify.service.GenreService;
 import com.ivandavid.spotify.service.TrackService;
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -52,10 +51,12 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDTO findById(Long id) {
-        var genre = genreRepository.findById(id);
-        if (genre.isEmpty())
+        var genre = genreRepository.findById(id)
+                .orElseThrow(() -> new GenreNotFoundException(id));
+        return GenreDTO.fromEntity(genre);
+        /*if (genre.isEmpty())
             return null;
-        return GenreDTO.fromEntity(genre.get());
+        return GenreDTO.fromEntity(genre.get());*/
     }
 
     @Override

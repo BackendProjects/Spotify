@@ -38,7 +38,7 @@ public class GenreController {
         var genreDTO = genreService.findById(id);
         if (genreDTO == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return ResponseEntity.ok(genreService.findById(id));
+        return ResponseEntity.ok(genreDTO);
     }
 
     @GetMapping("/{id}/tracks")
