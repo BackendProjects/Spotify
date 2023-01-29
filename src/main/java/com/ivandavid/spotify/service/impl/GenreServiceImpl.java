@@ -54,9 +54,6 @@ public class GenreServiceImpl implements GenreService {
         var genre = genreRepository.findById(id)
                 .orElseThrow(() -> new GenreNotFoundException(id));
         return GenreDTO.fromEntity(genre);
-        /*if (genre.isEmpty())
-            return null;
-        return GenreDTO.fromEntity(genre.get());*/
     }
 
     @Override
