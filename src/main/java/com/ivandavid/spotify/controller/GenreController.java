@@ -36,8 +36,6 @@ public class GenreController {
     @GetMapping("/{id}")
     public ResponseEntity<GenreDTO> findById(@PathVariable Long id) {
         var genreDTO = genreService.findById(id);
-        if (genreDTO == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(genreDTO);
     }
 
