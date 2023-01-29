@@ -31,20 +31,20 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreDTO create(GenreDTO dto) {
         var tracks = dto.getTrackIds().stream().map(id -> trackRepository.findById(id).get()).toList();
-        Genre genre = new Genre(
+        var genre = new Genre(
                 dto.getName(),
                 tracks
         );
-        Genre storedGenre = genreRepository.save(genre);
+        var storedGenre = genreRepository.save(genre);
         return GenreDTO.fromEntity(storedGenre);
     }
 
     @Override
     public List<GenreDTO> findAll() {
-        List<Genre> genres = genreRepository.findAll();
+        var genres = genreRepository.findAll();
         if (genres.isEmpty())
             return null;
-        List<GenreDTO> genresDTO = new ArrayList<>();
+        var genresDTO = new ArrayList<GenreDTO>();
         for (Genre g : genres)
             genresDTO.add(GenreDTO.fromEntity(g));
         return genresDTO;
@@ -52,7 +52,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDTO findById(Long id) {
-        Optional<Genre> genre = genreRepository.findById(id);
+        var genre = genreRepository.findById(id);
         if (genre.isEmpty())
             return null;
         return GenreDTO.fromEntity(genre.get());
@@ -70,7 +70,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDTO update(Long id, GenreDTO dto) {
-        Optional<Genre> genre = genreRepository.findById(id);
+        var genre = genreRepository.findById(id);
         if (genre.isEmpty())
             return null;
         genre.get().setName(dto.getName());
@@ -79,7 +79,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDTO updateName(Long id, String name) {
-        Optional<Genre> genre = genreRepository.findById(id);
+        var genre = genreRepository.findById(id);
         if (genre.isEmpty())
             return null;
         genre.get().setName(name);

@@ -26,21 +26,21 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDTO create(TrackDTO dto) {
         var genres = dto.getGenreIds().stream().map(id -> genreRepository.findById(id).get()).toList();
-        Track track = new Track(
+        var track = new Track(
                 dto.getName(),
                 dto.getDuration(),
                 genres
         );
-        Track storedTrack = trackRepository.save(track);
+        var storedTrack = trackRepository.save(track);
         return TrackDTO.fromEntity(storedTrack);
     }
 
     @Override
     public List<TrackDTO> findAll() {
-        List<Track> tracks = trackRepository.findAll();
+        var tracks = trackRepository.findAll();
         if (tracks.isEmpty())
             return null;
-        List<TrackDTO> trackDTOS = new ArrayList<>();
+        var trackDTOS = new ArrayList<TrackDTO>();
         for (Track track : tracks)
             trackDTOS.add(TrackDTO.fromEntity(track));
         return trackDTOS;
@@ -48,7 +48,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDTO findById(Long id) {
-        Optional<Track> track = trackRepository.findById(id);
+        var track = trackRepository.findById(id);
         if (track.isEmpty())
             return null;
         return TrackDTO.fromEntity(track.get());
@@ -56,7 +56,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDTO update(Long id, TrackDTO dto) {
-        Optional<Track> track = trackRepository.findById(id);
+        var track = trackRepository.findById(id);
         if (track.isEmpty())
             return null;
         track.get().setName(dto.getName());
@@ -67,7 +67,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDTO updateDuration(Long id, Long duration) {
-        Optional<Track> track = trackRepository.findById(id);
+        var track = trackRepository.findById(id);
         if (track.isEmpty())
             return null;
         track.get().setDuration(duration);
