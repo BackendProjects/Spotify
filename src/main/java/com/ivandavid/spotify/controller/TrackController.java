@@ -33,8 +33,9 @@ public class TrackController {
     }
 
     @GetMapping("/{id}")
-    public TrackDTO findById(@PathVariable Long id) {
-        return trackService.findById(id);
+    public ResponseEntity<TrackDTO> findById(@PathVariable Long id) {
+        var trackDTO = trackService.findById(id);
+        return ResponseEntity.ok(trackDTO);
     }
 
     @PutMapping("/{id}")

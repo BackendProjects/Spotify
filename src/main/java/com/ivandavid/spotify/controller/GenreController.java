@@ -34,8 +34,9 @@ public class GenreController {
     }
 
     @GetMapping("/{id}")
-    public GenreDTO findById(@PathVariable Long id) {
-        return genreService.findById(id);
+    public ResponseEntity<GenreDTO> findById(@PathVariable Long id) {
+        var genreDTO =  genreService.findById(id);
+        return ResponseEntity.ok(genreDTO);
     }
 
     @GetMapping("/{id}/tracks")
