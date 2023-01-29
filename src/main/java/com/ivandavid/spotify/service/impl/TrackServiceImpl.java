@@ -3,6 +3,7 @@ package com.ivandavid.spotify.service.impl;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.entity.Track;
+import com.ivandavid.spotify.exception.TrackNotFoundException;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
 import com.ivandavid.spotify.service.TrackService;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TrackServiceImpl implements TrackService {
@@ -48,10 +48,9 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDTO findById(Long id) {
-        var track = trackRepository.findById(id);
-        if (track.isEmpty())
-            return null;
-        return TrackDTO.fromEntity(track.get());
+        var track = trackRepository.findById(id)
+                .orElseThrow(() -> new TrackNotFoundException(id));
+        return TrackDTO.fromEntity(track);
     }
 
     @Override
