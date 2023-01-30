@@ -3,6 +3,7 @@ package com.ivandavid.spotify.service.impl;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.entity.Track;
+import com.ivandavid.spotify.exception.TrackListNotFoundException;
 import com.ivandavid.spotify.exception.TrackNotFoundException;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
@@ -39,7 +40,7 @@ public class TrackServiceImpl implements TrackService {
     public List<TrackDTO> findAll() {
         var tracks = trackRepository.findAll();
         if (tracks.isEmpty())
-            return null;
+            throw new TrackListNotFoundException();
         var trackDTOS = new ArrayList<TrackDTO>();
         for (Track track : tracks)
             trackDTOS.add(TrackDTO.fromEntity(track));

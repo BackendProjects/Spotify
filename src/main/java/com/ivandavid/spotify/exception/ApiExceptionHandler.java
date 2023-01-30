@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ApiExceptionHandler {
 
     @ResponseBody
-    @ExceptionHandler({GenreNotFoundException.class, TrackNotFoundException.class})
+    @ExceptionHandler({GenreNotFoundException.class, TrackNotFoundException.class, TrackListNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     ErrorMessage notFoundHandler(Exception ex) {
         return new ErrorMessage(ex.getMessage());
