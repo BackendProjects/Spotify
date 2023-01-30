@@ -39,8 +39,6 @@ public class TrackController {
     @PutMapping("/{id}")
     public ResponseEntity<TrackDTO> update(@PathVariable Long id, @RequestBody TrackDTO dto) {
         var trackDTO = trackService.update(id, dto);
-        if (trackDTO == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(trackDTO);
     }
 

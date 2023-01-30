@@ -1,5 +1,6 @@
 package com.ivandavid.spotify.entity;
 
+import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import jakarta.persistence.*;
 import lombok.Data;

@@ -7,11 +7,13 @@ import com.ivandavid.spotify.exception.TrackListNotFoundException;
 import com.ivandavid.spotify.exception.TrackNotFoundException;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
+import com.ivandavid.spotify.service.GenreService;
 import com.ivandavid.spotify.service.TrackService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TrackServiceImpl implements TrackService {
@@ -56,13 +58,21 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDTO update(Long id, TrackDTO dto) {
-        var track = trackRepository.findById(id);
-        if (track.isEmpty())
-            return null;
-        track.get().setName(dto.getName());
-        track.get().setDuration(dto.getDuration());
-        track.get().setReleasedDate(dto.getReleasedDate());
-        return TrackDTO.fromEntity(track.get());
+
+        var track = trackRepository.findById(id).get();
+        track.setName(dto.getName());
+        track.setDuration(dto.getDuration());
+        track.setReleasedDate(dto.getReleasedDate());
+
+        List<Genre> genres = new ArrayList<>();
+        for (Long genreId : dto.getGenreIds()) {
+            var gen = genreRepository.findById(genreId).get();
+            genres.add(gen);
+        }
+        track.setGenres(genres);
+
+        var storedTrack = trackRepository.save(track);
+        return TrackDTO.fromEntity(storedTrack);
     }
 
     @Override
