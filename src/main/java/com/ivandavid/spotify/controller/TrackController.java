@@ -27,8 +27,6 @@ public class TrackController {
     @GetMapping
     public ResponseEntity<List<TrackDTO>> findAll() {
         var trackDTOS = trackService.findAll();
-        if (trackDTOS == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(trackDTOS);
     }
 
