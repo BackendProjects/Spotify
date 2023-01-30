@@ -56,11 +56,13 @@ public class Track {
         //this.artist = artist;
     }
 
-    public static Track fromDTO(TrackDTO dto) {
+    public static Track fromDTO(TrackDTO dto, List<Genre> genres) {
         var track = new Track();
+        track.setId(dto.getId());
         track.setName(dto.getName());
         track.setDuration(dto.getDuration());
         track.setReleasedDate(dto.getReleasedDate());
+        track.setGenres(genres);
         return track;
     }
 
