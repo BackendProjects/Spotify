@@ -45,8 +45,6 @@ public class TrackController {
     @PatchMapping("/{id}")
     public ResponseEntity<TrackDTO> updateDuration(@PathVariable Long id, @RequestParam Long duration) {
         var trackDTO = trackService.updateDuration(id, duration);
-        if (trackDTO == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(trackDTO);
     }
 

@@ -71,11 +71,12 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDTO updateDuration(Long id, Long duration) {
-        var track = trackRepository.findById(id);
-        if (track.isEmpty())
-            return null;
-        track.get().setDuration(duration);
-        return TrackDTO.fromEntity(track.get());
+        var trackDTO = findById(id);
+        var genres = trackDTO.getGenreIds().stream().map(genreId -> genreRepository.findById(genreId).get()).toList();
+        var track = Track.fromDTO(trackDTO, genres);
+        track.setDuration(duration);
+        var storedTrack = trackRepository.save(track);
+        return TrackDTO.fromEntity(storedTrack);
     }
 
     @Override
