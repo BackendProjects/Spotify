@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ivandavid.spotify.enums.SearchParamType.ID;
+
 @Service
 public class GenreServiceImpl implements GenreService {
 
@@ -53,7 +55,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreDTO findById(Long id) {
         var genre = genreRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(EntityName.GENRE, "id", id));
+                .orElseThrow(() -> new ResourceNotFoundException(EntityName.GENRE, ID, id));
         return GenreDTO.fromEntity(genre);
     }
 
