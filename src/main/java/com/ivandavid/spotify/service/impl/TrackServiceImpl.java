@@ -3,17 +3,19 @@ package com.ivandavid.spotify.service.impl;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.entity.Track;
-import com.ivandavid.spotify.exception.TrackListNotFoundException;
-import com.ivandavid.spotify.exception.TrackNotFoundException;
+import com.ivandavid.spotify.enums.EntityName;
+import com.ivandavid.spotify.enums.SearchParamType;
+import com.ivandavid.spotify.exception.ResourceNotFoundException;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
-import com.ivandavid.spotify.service.GenreService;
 import com.ivandavid.spotify.service.TrackService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
+import static com.ivandavid.spotify.enums.EntityName.TRACK;
+import static com.ivandavid.spotify.enums.SearchParamType.ID;
 
 @Service
 public class TrackServiceImpl implements TrackService {
@@ -27,7 +29,7 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public TrackDTO create(TrackDTO dto) {
+    public TrackDTO createTrack(TrackDTO dto) {
         var genres = dto.getGenreIds().stream().map(id -> genreRepository.findById(id).get()).toList();
         var track = new Track(
                 dto.getName(),
@@ -39,10 +41,10 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public List<TrackDTO> findAll() {
+    public List<TrackDTO> getAllTracks() {
         var tracks = trackRepository.findAll();
         if (tracks.isEmpty())
-            throw new TrackListNotFoundException();
+            throw new ResourceNotFoundException(TRACK, ID);
         var trackDTOS = new ArrayList<TrackDTO>();
         for (Track track : tracks)
             trackDTOS.add(TrackDTO.fromEntity(track));
@@ -50,16 +52,16 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public TrackDTO findById(Long id) {
+    public TrackDTO getTrackById(Long id) {
         var track = trackRepository.findById(id)
-                .orElseThrow(() -> new TrackNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(TRACK, ID, id));
         return TrackDTO.fromEntity(track);
     }
 
     @Override
-    public TrackDTO update(Long id, TrackDTO dto) {
+    public TrackDTO updateTrack(Long id, TrackDTO dto) {
         var genres = dto.getGenreIds().stream().map(genreId -> genreRepository.findById(genreId).get()).toList();
-        var trackDTO = findById(id);
+        var trackDTO = getTrackById(id);
         var track = Track.fromDTO(trackDTO, genres);
         track.setName(dto.getName());
         track.setDuration(dto.getDuration());
@@ -71,7 +73,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDTO updateDuration(Long id, Long duration) {
-        var trackDTO = findById(id);
+        var trackDTO = getTrackById(id);
         var genres = trackDTO.getGenreIds().stream().map(genreId -> genreRepository.findById(genreId).get()).toList();
         var track = Track.fromDTO(trackDTO, genres);
         track.setDuration(duration);
@@ -80,9 +82,14 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public void delete(Long id) {
-        var track = trackRepository.findById(id).orElseThrow(() -> new TrackNotFoundException(id));
+    public void deleteTrack(Long id) {
+        var track = getTrackEntityById(id);
         trackRepository.delete(track);
+    }
+
+    public Track getTrackEntityById(Long id) {
+        return trackRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(TRACK, ID, id));
     }
 
     @Override

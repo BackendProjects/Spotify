@@ -7,17 +7,17 @@ import com.ivandavid.spotify.entity.Track;
 import java.util.List;
 
 public interface TrackService {
-    TrackDTO create(TrackDTO dto);
+    TrackDTO createTrack(TrackDTO dto);
 
-    List<TrackDTO> findAll();
+    List<TrackDTO> getAllTracks();
 
-    TrackDTO findById(Long id);
+    TrackDTO getTrackById(Long id);
 
     TrackDTO updateDuration(Long id, Long duration);
 
-    TrackDTO update(Long id, TrackDTO dto);
+    TrackDTO updateTrack(Long id, TrackDTO dto);
 
-    void delete(Long id);
+    void deleteTrack(Long id);
 
     List<Track> findTracksByGenre(Genre genre);
 }

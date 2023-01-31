@@ -4,7 +4,8 @@ import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.entity.Track;
-import com.ivandavid.spotify.exception.GenreNotFoundException;
+import com.ivandavid.spotify.enums.EntityName;
+import com.ivandavid.spotify.exception.ResourceNotFoundException;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
 import com.ivandavid.spotify.service.GenreService;
@@ -52,7 +53,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreDTO findById(Long id) {
         var genre = genreRepository.findById(id)
-                .orElseThrow(() -> new GenreNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(EntityName.GENRE, "id", id));
         return GenreDTO.fromEntity(genre);
     }
 

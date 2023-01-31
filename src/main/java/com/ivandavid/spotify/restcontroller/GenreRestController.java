@@ -1,4 +1,4 @@
-package com.ivandavid.spotify.controller;
+package com.ivandavid.spotify.restcontroller;
 
 import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.DTO.TrackDTO;
@@ -11,11 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/genres")
-public class GenreController {
+public class GenreRestController {
 
     private final GenreService genreService;
 
-    public GenreController(GenreService genreService) {
+    public GenreRestController(GenreService genreService) {
         this.genreService = genreService;
     }
 
