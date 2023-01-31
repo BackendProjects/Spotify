@@ -61,8 +61,9 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDTO updateTrack(Long id, TrackDTO dto) {
         var genres = dto.getGenreIds().stream().map(genreId -> genreRepository.findById(genreId).get()).toList();
-        var trackDTO = getTrackById(id);
-        var track = Track.fromDTO(trackDTO, genres);
+        dto.setId(id);
+        var track = new Track();
+        track.setId(id);
         track.setName(dto.getName());
         track.setDuration(dto.getDuration());
         track.setReleasedDate(dto.getReleasedDate());
@@ -73,9 +74,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDTO updateDuration(Long id, Long duration) {
-        var trackDTO = getTrackById(id);
-        var genres = trackDTO.getGenreIds().stream().map(genreId -> genreRepository.findById(genreId).get()).toList();
-        var track = Track.fromDTO(trackDTO, genres);
+        var track = getTrackEntityById(id);
         track.setDuration(duration);
         var storedTrack = trackRepository.save(track);
         return TrackDTO.fromEntity(storedTrack);
