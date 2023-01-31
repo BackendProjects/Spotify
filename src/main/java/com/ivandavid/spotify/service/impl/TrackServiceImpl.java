@@ -81,7 +81,8 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public void delete(Long id) {
-        trackRepository.deleteById(id);
+        var track = trackRepository.findById(id).orElseThrow(() -> new TrackNotFoundException(id));
+        trackRepository.delete(track);
     }
 
     @Override
