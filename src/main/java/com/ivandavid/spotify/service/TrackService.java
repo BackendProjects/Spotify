@@ -12,6 +12,7 @@ public interface TrackService {
     List<TrackDTO> getAllTracks();
 
     TrackDTO getTrackById(Long id);
+    Track getTrackEntityById(Long id);
 
     TrackDTO updateDuration(Long id, Long duration);
 

@@ -3,34 +3,35 @@ package com.ivandavid.spotify.service.impl;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.entity.Track;
-import com.ivandavid.spotify.enums.EntityName;
-import com.ivandavid.spotify.enums.SearchParamType;
 import com.ivandavid.spotify.exception.ResourceNotFoundException;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
+import com.ivandavid.spotify.service.GenreService;
 import com.ivandavid.spotify.service.TrackService;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.ivandavid.spotify.enums.EntityName.TRACK;
 import static com.ivandavid.spotify.enums.SearchParamType.ID;
 
+@Component
 @Service
 public class TrackServiceImpl implements TrackService {
 
     private final TrackRepository trackRepository;
-    private final GenreRepository genreRepository;
+    private final GenreService genreService;
 
-    public TrackServiceImpl(TrackRepository trackRepository, GenreRepository genreRepository) {
+    public TrackServiceImpl(TrackRepository trackRepository, @Lazy GenreService genreService) {
         this.trackRepository = trackRepository;
-        this.genreRepository = genreRepository;
+        this.genreService = genreService;
     }
 
     @Override
     public TrackDTO createTrack(TrackDTO dto) {
-        var genres = dto.getGenreIds().stream().map(id -> genreRepository.findById(id).get()).toList();
+        var genres = dto.getGenreIds().stream().map(genreService::getGenreEntityById).toList();
         var track = new Track(
                 dto.getName(),
                 dto.getDuration(),
@@ -55,10 +56,15 @@ public class TrackServiceImpl implements TrackService {
         return TrackDTO.fromEntity(track);
     }
 
+    /*@Override
+    public Track getTrackEntityById(Long id) {
+        return trackRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(TRACK, ID, id));
+    }*/
+
     @Override
     public TrackDTO updateTrack(Long id, TrackDTO dto) {
-        var genres = dto.getGenreIds().stream().map(genreId -> genreRepository.findById(genreId).get()).toList();
-        dto.setId(id);
+        var genres = dto.getGenreIds().stream().map(genreService::getGenreEntityById).toList();
         var track = new Track();
         track.setId(id);
         track.setName(dto.getName());
