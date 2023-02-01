@@ -45,10 +45,7 @@ public class TrackServiceImpl implements TrackService {
         var tracks = trackRepository.findAll();
         if (tracks.isEmpty())
             throw new ResourceNotFoundException(TRACK, ID);
-        var trackDTOS = new ArrayList<TrackDTO>();
-        for (Track track : tracks)
-            trackDTOS.add(TrackDTO.fromEntity(track));
-        return trackDTOS;
+        return tracks.stream().map(TrackDTO::fromEntity).toList();
     }
 
     @Override
