@@ -56,6 +56,12 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
+    public Track getTrackEntityById(Long id) {
+        return trackRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(TRACK, ID, id));
+    }
+
+    @Override
     public TrackDTO updateTrack(Long id, TrackDTO dto) {
         var genres = dto.getGenreIds().stream().map(genreService::getGenreEntityById).toList();
         var track = new Track();
@@ -80,11 +86,6 @@ public class TrackServiceImpl implements TrackService {
     public void deleteTrackById(Long id) {
         var track = getTrackEntityById(id);
         trackRepository.delete(track);
-    }
-
-    public Track getTrackEntityById(Long id) {
-        return trackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(TRACK, ID, id));
     }
 
     @Override
