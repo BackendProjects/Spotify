@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ivandavid.spotify.enums.EntityName.TRACK;
 import static com.ivandavid.spotify.enums.SearchParamType.ID;
 
 @Service
@@ -42,11 +43,8 @@ public class GenreServiceImpl implements GenreService {
     public List<GenreDTO> findAll() {
         var genres = genreRepository.findAll();
         if (genres.isEmpty())
-            return null;
-        var genresDTO = new ArrayList<GenreDTO>();
-        for (Genre g : genres)
-            genresDTO.add(GenreDTO.fromEntity(g));
-        return genresDTO;
+            throw new ResourceNotFoundException(TRACK, ID);
+        return genres.stream().map(GenreDTO::fromEntity).toList();
     }
 
     @Override
@@ -64,12 +62,9 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<TrackDTO> findTracksByGenreId(Long genreId) {
-        var genre = genreRepository.findById(genreId).get();
+        var genre = getGenreEntityById(genreId);
         var tracks = trackService.findTracksByGenre(genre);
-        var trackDTOs = new ArrayList<TrackDTO>();
-        for (Track t : tracks)
-            trackDTOs.add(TrackDTO.fromEntity(t));
-        return trackDTOs;
+        return tracks.stream().map(TrackDTO::fromEntity).toList();
     }
 
     @Override
@@ -83,16 +78,15 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDTO updateName(Long id, String name) {
-        var genre = genreRepository.findById(id);
-        if (genre.isEmpty())
-            return null;
-        genre.get().setName(name);
-        return GenreDTO.fromEntity(genre.get());
+        var genre = getGenreEntityById(id);
+        genre.setName(name);
+        return GenreDTO.fromEntity(genre);
     }
 
     @Override
     public void deleteById(Long id) {
-        genreRepository.deleteById(id);
+        var genre = getGenreEntityById(id);
+        genreRepository.delete(genre);
     }
 
 }

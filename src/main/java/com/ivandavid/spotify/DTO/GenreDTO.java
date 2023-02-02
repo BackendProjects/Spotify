@@ -20,6 +20,7 @@ public class GenreDTO {
 
     public static GenreDTO fromEntity(Genre genre) {
         var genreDTO = new GenreDTO();
+        genreDTO.setId(genre.getId());
         genreDTO.setName(genre.getName());
         genreDTO.setId(genre.getId());
 

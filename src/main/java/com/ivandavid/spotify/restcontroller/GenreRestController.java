@@ -42,8 +42,8 @@ public class GenreRestController {
     @GetMapping("/{id}/tracks")
     public ResponseEntity<List<TrackDTO>> findTracksById(@PathVariable Long id) {
         var TracksDTOs = genreService.findTracksByGenreId(id);
-        if (TracksDTOs == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        /*if (TracksDTOs == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);*/
         return ResponseEntity.ok(TracksDTOs);
     }
 
