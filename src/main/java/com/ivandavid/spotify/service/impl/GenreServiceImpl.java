@@ -69,11 +69,10 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDTO update(Long id, GenreDTO dto) {
-        var genre = genreRepository.findById(id);
-        if (genre.isEmpty())
-            return null;
-        genre.get().setName(dto.getName());
-        return GenreDTO.fromEntity(genre.get());
+        var genre = getGenreEntityById(id);
+        genre.setName(dto.getName());
+        var sotoredGenre = genreRepository.save(genre);
+        return GenreDTO.fromEntity(sotoredGenre);
     }
 
     @Override
