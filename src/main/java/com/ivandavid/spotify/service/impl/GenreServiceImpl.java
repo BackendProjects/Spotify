@@ -3,7 +3,6 @@ package com.ivandavid.spotify.service.impl;
 import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
-import com.ivandavid.spotify.entity.Track;
 import com.ivandavid.spotify.enums.EntityName;
 import com.ivandavid.spotify.exception.ResourceNotFoundException;
 import com.ivandavid.spotify.repository.GenreRepository;
@@ -11,7 +10,6 @@ import com.ivandavid.spotify.service.GenreService;
 import com.ivandavid.spotify.service.TrackService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.ivandavid.spotify.enums.EntityName.TRACK;
@@ -29,7 +27,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public GenreDTO create(GenreDTO dto) {
+    public GenreDTO createGenre(GenreDTO dto) {
         var tracks = dto.getTrackIds().stream().map(trackService::getTrackEntityById).toList();
         var genre = new Genre(
                 dto.getName(),
@@ -40,7 +38,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<GenreDTO> findAll() {
+    public List<GenreDTO> getAllGenres() {
         var genres = genreRepository.findAll();
         if (genres.isEmpty())
             throw new ResourceNotFoundException(TRACK, ID);
@@ -48,7 +46,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public GenreDTO findById(Long id) {
+    public GenreDTO getGenreById(Long id) {
         var genre = genreRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(EntityName.GENRE, ID, id));
         return GenreDTO.fromEntity(genre);
@@ -61,14 +59,14 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<TrackDTO> findTracksByGenreId(Long genreId) {
+    public List<TrackDTO> GetTracksByGenreId(Long genreId) {
         var genre = getGenreEntityById(genreId);
-        var tracks = trackService.findTracksByGenre(genre);
+        var tracks = trackService.getTracksByGenre(genre);
         return tracks.stream().map(TrackDTO::fromEntity).toList();
     }
 
     @Override
-    public GenreDTO update(Long id, GenreDTO dto) {
+    public GenreDTO updateGenre(Long id, GenreDTO dto) {
         var genre = getGenreEntityById(id);
         genre.setName(dto.getName());
         var sotoredGenre = genreRepository.save(genre);
@@ -83,7 +81,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteGenreById(Long id) {
         var genre = getGenreEntityById(id);
         genreRepository.delete(genre);
     }

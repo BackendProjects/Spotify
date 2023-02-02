@@ -8,18 +8,18 @@ import java.util.List;
 
 public interface GenreService {
 
-    GenreDTO create(GenreDTO dto);
+    GenreDTO createGenre(GenreDTO dto);
 
-    List<GenreDTO> findAll();
+    List<GenreDTO> getAllGenres();
 
-    GenreDTO findById(Long id);
+    GenreDTO getGenreById(Long id);
     Genre getGenreEntityById(Long id);
-    List<TrackDTO> findTracksByGenreId(Long genreId);
+    List<TrackDTO> GetTracksByGenreId(Long genreId);
 
-    GenreDTO update(Long id, GenreDTO dto);
+    GenreDTO updateGenre(Long id, GenreDTO dto);
     GenreDTO updateName(Long id, String name);
 
-    void deleteById(Long id);
+    void deleteGenreById(Long id);
 
 
 }

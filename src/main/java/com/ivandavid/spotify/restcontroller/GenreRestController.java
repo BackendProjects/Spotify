@@ -20,36 +20,32 @@ public class GenreRestController {
     }
 
     @PostMapping
-    public ResponseEntity<GenreDTO> create(@RequestBody GenreDTO dto) {
-        var genreDTO = genreService.create(dto);
+    public ResponseEntity<GenreDTO> createGenre(@RequestBody GenreDTO dto) {
+        var genreDTO = genreService.createGenre(dto);
         return new ResponseEntity<>(genreDTO, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<GenreDTO>> findAll() {
-        var genreDTOS = genreService.findAll();
-        if (genreDTOS == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<GenreDTO>> getAllGenres() {
+        var genreDTOS = genreService.getAllGenres();
         return ResponseEntity.ok(genreDTOS);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenreDTO> findById(@PathVariable Long id) {
-        var genreDTO =  genreService.findById(id);
+    public ResponseEntity<GenreDTO> getGenreById(@PathVariable Long id) {
+        var genreDTO =  genreService.getGenreById(id);
         return ResponseEntity.ok(genreDTO);
     }
 
     @GetMapping("/{id}/tracks")
-    public ResponseEntity<List<TrackDTO>> findTracksById(@PathVariable Long id) {
-        var TracksDTOs = genreService.findTracksByGenreId(id);
-        /*if (TracksDTOs == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);*/
+    public ResponseEntity<List<TrackDTO>> GetTracksByGenreId(@PathVariable Long id) {
+        var TracksDTOs = genreService.GetTracksByGenreId(id);
         return ResponseEntity.ok(TracksDTOs);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GenreDTO> update(@PathVariable Long id, @RequestBody GenreDTO dto) {
-        return ResponseEntity.ok((genreService.update(id, dto)));
+    public ResponseEntity<GenreDTO> updateGenre(@PathVariable Long id, @RequestBody GenreDTO dto) {
+        return ResponseEntity.ok((genreService.updateGenre(id, dto)));
     }
 
     @PatchMapping("/{id}")
@@ -58,11 +54,8 @@ public class GenreRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        var genreDTO = genreService.findById(id);
-        if (genreDTO == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-       genreService.deleteById(id);
+    public ResponseEntity<Void> deleteGenreById(@PathVariable Long id) {
+       genreService.deleteGenreById(id);
        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

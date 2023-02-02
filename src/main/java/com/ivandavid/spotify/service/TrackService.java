@@ -18,7 +18,7 @@ public interface TrackService {
 
     TrackDTO updateTrack(Long id, TrackDTO dto);
 
-    void deleteTrack(Long id);
+    void deleteTrackById(Long id);
 
-    List<Track> findTracksByGenre(Genre genre);
+    List<Track> getTracksByGenre(Genre genre);
 }

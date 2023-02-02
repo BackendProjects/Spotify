@@ -12,5 +12,5 @@ import java.util.List;
 public interface TrackRepository extends JpaRepository<Track, Long> {
 
     @Query("SELECT t FROM Track t WHERE ?1 MEMBER OF t.genres")
-    List<Track> findTracksByGenre(Genre genre);
+    List<Track> getTracksByGenre(Genre genre);
 }

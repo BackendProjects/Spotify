@@ -4,7 +4,6 @@ import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.entity.Track;
 import com.ivandavid.spotify.exception.ResourceNotFoundException;
-import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.repository.TrackRepository;
 import com.ivandavid.spotify.service.GenreService;
 import com.ivandavid.spotify.service.TrackService;
@@ -56,12 +55,6 @@ public class TrackServiceImpl implements TrackService {
         return TrackDTO.fromEntity(track);
     }
 
-    /*@Override
-    public Track getTrackEntityById(Long id) {
-        return trackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(TRACK, ID, id));
-    }*/
-
     @Override
     public TrackDTO updateTrack(Long id, TrackDTO dto) {
         var genres = dto.getGenreIds().stream().map(genreService::getGenreEntityById).toList();
@@ -84,7 +77,7 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public void deleteTrack(Long id) {
+    public void deleteTrackById(Long id) {
         var track = getTrackEntityById(id);
         trackRepository.delete(track);
     }
@@ -95,8 +88,8 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public List<Track> findTracksByGenre(Genre genre) {
-        return trackRepository.findTracksByGenre(genre);
+    public List<Track> getTracksByGenre(Genre genre) {
+        return trackRepository.getTracksByGenre(genre);
     }
 
 }

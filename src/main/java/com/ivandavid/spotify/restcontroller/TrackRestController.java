@@ -49,8 +49,8 @@ public class TrackRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTrack(@PathVariable Long id) {
-        trackService.deleteTrack(id);
+    public ResponseEntity<Void> deleteTrackById(@PathVariable Long id) {
+        trackService.deleteTrackById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
