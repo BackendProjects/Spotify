@@ -23,12 +23,6 @@ public class GenreDTO {
         genreDTO.setId(genre.getId());
         genreDTO.setName(genre.getName());
         genreDTO.setId(genre.getId());
-
-        /*var trackIds = new ArrayList<Long>();
-        for (Track t : genre.getTracks())
-            trackIds.add(t.getId());
-        genreDTO.setTrackIds(trackIds);*/
-
         return genreDTO;
     }
 }

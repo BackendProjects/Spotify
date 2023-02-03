@@ -34,10 +34,8 @@ public class GenreServiceImpl implements GenreService {
         if (genreRepository.existsGenreByName(dto.getName())) {
             throw new BadRequestException("Genre name is already taken");
         }
-        //var tracks = dto.getTrackIds().stream().map(trackService::getTrackEntityById).toList();
         var genre = new Genre(
-                dto.getName()/*,
-                tracks*/
+                dto.getName()
         );
         var storedGenre = genreRepository.save(genre);
         return GenreDTO.fromEntity(storedGenre);

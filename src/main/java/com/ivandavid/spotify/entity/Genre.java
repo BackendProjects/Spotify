@@ -18,26 +18,8 @@ public class Genre {
     private Long id;
     private String name;
 
-    /*@ManyToMany(mappedBy = "genres")
-    private List<Track> tracks;*/
-
-    /*public Genre(String name, List<Track> tracks) {
-        this.name = name;
-        //this.tracks = tracks;
-    }
-
-    public Genre(String name) {
-        this.name = name;
-        //this.tracks = new ArrayList<>();
-    }*/
-
     public Genre(String name) {
         this.name = name;
     }
 
-    public static Genre fromDTO(GenreDTO dto) {
-        Genre genre = new Genre();
-        genre.setName(dto.getName());
-        return genre;
-    }
 }
