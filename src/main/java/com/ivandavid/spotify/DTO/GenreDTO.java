@@ -16,7 +16,7 @@ public class GenreDTO {
 
     private Long id;
     private String name;
-    private List<Long> trackIds;
+    //private List<Long> trackIds;
 
     public static GenreDTO fromEntity(Genre genre) {
         var genreDTO = new GenreDTO();
@@ -24,10 +24,10 @@ public class GenreDTO {
         genreDTO.setName(genre.getName());
         genreDTO.setId(genre.getId());
 
-        var trackIds = new ArrayList<Long>();
+        /*var trackIds = new ArrayList<Long>();
         for (Track t : genre.getTracks())
             trackIds.add(t.getId());
-        genreDTO.setTrackIds(trackIds);
+        genreDTO.setTrackIds(trackIds);*/
 
         return genreDTO;
     }

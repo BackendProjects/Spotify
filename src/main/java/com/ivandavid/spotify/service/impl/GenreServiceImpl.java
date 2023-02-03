@@ -3,12 +3,15 @@ package com.ivandavid.spotify.service.impl;
 import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
+import com.ivandavid.spotify.entity.Track;
 import com.ivandavid.spotify.enums.EntityName;
+import com.ivandavid.spotify.exception.BadRequestException;
 import com.ivandavid.spotify.exception.ResourceNotFoundException;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.service.GenreService;
 import com.ivandavid.spotify.service.TrackService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,10 +31,13 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDTO createGenre(GenreDTO dto) {
-        var tracks = dto.getTrackIds().stream().map(trackService::getTrackEntityById).toList();
+        if (genreRepository.existsGenreByName(dto.getName())) {
+            throw new BadRequestException("Genre name is already taken");
+        }
+        //var tracks = dto.getTrackIds().stream().map(trackService::getTrackEntityById).toList();
         var genre = new Genre(
-                dto.getName(),
-                tracks
+                dto.getName()/*,
+                tracks*/
         );
         var storedGenre = genreRepository.save(genre);
         return GenreDTO.fromEntity(storedGenre);
@@ -80,10 +86,20 @@ public class GenreServiceImpl implements GenreService {
         return GenreDTO.fromEntity(genre);
     }
 
+    @Transactional
     @Override
     public void deleteGenreById(Long id) {
+
         var genre = getGenreEntityById(id);
+        var tracks = trackService.getTracksByGenre(genre);
+        for (Track track : tracks) {
+            trackService.deleteTrackById(track.getId());
+        }
         genreRepository.delete(genre);
+        //@Qualifier
+        //@Component(name="algo")
+        //@Qualifier("algo")
+        //DTO con Component
     }
 
 }
