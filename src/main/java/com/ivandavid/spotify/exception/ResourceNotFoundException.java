@@ -16,15 +16,15 @@ public class ResourceNotFoundException extends RuntimeException {
 	private String message;
 	private ErrorMessageResponse errorMessageResponse;
 
-	public ResourceNotFoundException(EntityName entityName, SearchParamType fieldName, Object fieldValue) {
+	public ResourceNotFoundException(String entityName, SearchParamType fieldName, Object fieldValue) {
 		super();
 		this.message = String.format("%s not found with %s: '%s'", entityName, fieldName, fieldValue);
 		setErrorMessageResponse(message);
 	}
 
-	public ResourceNotFoundException(EntityName entityName, SearchParamType fieldName) {
+	public ResourceNotFoundException(String entityName) {
 		super();
-		this.message = String.format("%s not found with %s", entityName, fieldName);
+		this.message = String.format("The %s table is empty", entityName);
 		setErrorMessageResponse(message);
 	}
 

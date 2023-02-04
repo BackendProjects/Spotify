@@ -44,7 +44,7 @@ public class TrackServiceImpl implements TrackService {
     public List<TrackDTO> getAllTracks() {
         var tracks = trackRepository.findAll();
         if (tracks.isEmpty()) {
-            throw new ResourceNotFoundException(TRACK, ID);
+            throw new ResourceNotFoundException(TRACK.value);
         }
         return tracks.stream().map(TrackDTO::fromEntity).toList();
     }
@@ -52,14 +52,14 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDTO getTrackById(Long id) {
         var track = trackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(TRACK, ID, id));
+                .orElseThrow(() -> new ResourceNotFoundException(TRACK.value, ID, id));
         return TrackDTO.fromEntity(track);
     }
 
     @Override
     public Track getTrackEntityById(Long id) {
         return trackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(TRACK, ID, id));
+                .orElseThrow(() -> new ResourceNotFoundException(TRACK.value, ID, id));
     }
 
     @Override

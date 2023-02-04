@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.ivandavid.spotify.enums.EntityName.GENRE;
 import static com.ivandavid.spotify.enums.EntityName.TRACK;
 import static com.ivandavid.spotify.enums.ExceptionMessage.NAME_ALREADY_TAKEN;
 import static com.ivandavid.spotify.enums.ExceptionMessage.NOT_INPUT_ELEMENT;
@@ -53,7 +54,7 @@ public class GenreServiceImpl implements GenreService {
     public List<GenreDTO> getAllGenres() {
         var genres = genreRepository.findAll();
         if (genres.isEmpty()) {
-            throw new ResourceNotFoundException(TRACK, ID);
+            throw new ResourceNotFoundException(GENRE.value);
         }
         return genres.stream().map(GenreDTO::fromEntity).toList();
     }
@@ -61,14 +62,14 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreDTO getGenreById(Long id) {
         var genre = genreRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(EntityName.GENRE, ID, id));
+                .orElseThrow(() -> new ResourceNotFoundException(GENRE.value, ID, id));
         return GenreDTO.fromEntity(genre);
     }
 
     @Override
     public Genre getGenreEntityById(Long id) {
         return genreRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(EntityName.GENRE, ID, id));
+                .orElseThrow(() -> new ResourceNotFoundException(GENRE.value, ID, id));
     }
 
     @Override

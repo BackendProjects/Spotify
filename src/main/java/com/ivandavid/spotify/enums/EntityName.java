@@ -4,7 +4,9 @@ public enum EntityName {
     TRACK("Track"),
     GENRE("Genre");
 
+    public final String value;
 
-    EntityName(String track) {
+    EntityName(String value) {
+        this.value = value;
     }
 }
