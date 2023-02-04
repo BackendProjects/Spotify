@@ -43,8 +43,9 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public List<TrackDTO> getAllTracks() {
         var tracks = trackRepository.findAll();
-        if (tracks.isEmpty())
+        if (tracks.isEmpty()) {
             throw new ResourceNotFoundException(TRACK, ID);
+        }
         return tracks.stream().map(TrackDTO::fromEntity).toList();
     }
 

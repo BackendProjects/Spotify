@@ -1,7 +1,7 @@
 package com.ivandavid.spotify.exception;
 
+import com.ivandavid.spotify.enums.ExceptionMessage;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 

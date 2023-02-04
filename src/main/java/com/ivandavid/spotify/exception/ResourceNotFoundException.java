@@ -1,6 +1,7 @@
 package com.ivandavid.spotify.exception;
 
 import com.ivandavid.spotify.enums.EntityName;
+import com.ivandavid.spotify.enums.ExceptionMessage;
 import com.ivandavid.spotify.enums.SearchParamType;
 import lombok.Data;
 import lombok.Getter;

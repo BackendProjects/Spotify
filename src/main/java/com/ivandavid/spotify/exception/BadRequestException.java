@@ -1,5 +1,8 @@
 package com.ivandavid.spotify.exception;
 
+import com.ivandavid.spotify.enums.ExceptionMessage;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
