@@ -7,17 +7,15 @@ import java.time.LocalDateTime;
 
 @Getter
 public class ErrorMessageResponse {
-
-    private final HttpStatus statusName;
-    private final Integer statusCode;
-    private final String message;
     private final LocalDateTime timestamp;
+    private final Integer statusCode;
+    private final String statusName;
+    private final String message;
 
-    public ErrorMessageResponse(String statusName, Integer statusCode, String message, LocalDateTime timestamp) {
-        this.statusName = HttpStatus.valueOf(statusName);
-        this.statusCode = statusCode;
-        this.message = message;
+    public ErrorMessageResponse(LocalDateTime timestamp, Integer statusCode, String statusName, String message) {
         this.timestamp = timestamp;
+        this.statusCode = statusCode;
+        this.statusName = statusName;
+        this.message = message;
     }
-
 }

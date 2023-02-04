@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 
 @Getter
 public class BadRequestException extends RuntimeException {
-
     private final HttpStatus status = HttpStatus.BAD_REQUEST;
     private ErrorMessageResponse errorMessageResponse;
+
 
     public BadRequestException(String message) {
         super();
@@ -18,10 +18,10 @@ public class BadRequestException extends RuntimeException {
 
     private void setErrorMessageResponse(String message) {
         errorMessageResponse = new ErrorMessageResponse(
-                status.name(),
-                status.value(),
-                message,
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                this.status.value(),
+                this.status.name(),
+                message
         );
     }
 }
