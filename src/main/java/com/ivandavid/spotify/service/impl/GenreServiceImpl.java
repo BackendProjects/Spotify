@@ -4,22 +4,17 @@ import com.ivandavid.spotify.DTO.GenreDTO;
 import com.ivandavid.spotify.DTO.TrackDTO;
 import com.ivandavid.spotify.entity.Genre;
 import com.ivandavid.spotify.entity.Track;
-import com.ivandavid.spotify.enums.EntityName;
-import com.ivandavid.spotify.enums.ExceptionMessage;
 import com.ivandavid.spotify.exception.BadRequestException;
 import com.ivandavid.spotify.exception.ResourceNotFoundException;
 import com.ivandavid.spotify.repository.GenreRepository;
 import com.ivandavid.spotify.service.GenreService;
 import com.ivandavid.spotify.service.TrackService;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static com.ivandavid.spotify.enums.EntityName.GENRE;
-import static com.ivandavid.spotify.enums.EntityName.TRACK;
 import static com.ivandavid.spotify.enums.ExceptionMessage.NAME_ALREADY_TAKEN;
 import static com.ivandavid.spotify.enums.ExceptionMessage.NOT_INPUT_ELEMENT;
 import static com.ivandavid.spotify.enums.SearchParamType.ID;
@@ -37,12 +32,8 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDTO createGenre(GenreDTO dto) {
-        if (dto.getName().isEmpty()) {
-            throw new BadRequestException(NOT_INPUT_ELEMENT.value);
-        }
-        if (genreRepository.existsGenreByName(dto.getName())) {
-            throw new BadRequestException(NAME_ALREADY_TAKEN.value);
-        }
+        validateGenreNameNotEmpty(dto.getName());
+        validateExistsGenreByName(dto.getName());
         var genre = new Genre(
                 dto.getName()
         );
@@ -108,6 +99,18 @@ public class GenreServiceImpl implements GenreService {
         //@Component(name="algo")
         //@Qualifier("algo")
         //DTO con Component
+    }
+
+    private void validateGenreNameNotEmpty(String name) {
+        if (name.isEmpty()) {
+            throw new BadRequestException(NOT_INPUT_ELEMENT.value);
+        }
+    }
+
+    private void validateExistsGenreByName(String name) {
+        if (genreRepository.existsGenreByName(name)) {
+            throw new BadRequestException(NAME_ALREADY_TAKEN.value);
+        }
     }
 
 }
