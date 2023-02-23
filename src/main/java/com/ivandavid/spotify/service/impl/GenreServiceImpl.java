@@ -95,10 +95,6 @@ public class GenreServiceImpl implements GenreService {
             trackService.deleteTrackById(track.getId());
         }
         genreRepository.delete(genre);
-        //@Qualifier
-        //@Component(name="algo")
-        //@Qualifier("algo")
-        //DTO con Component
     }
 
     private void validateGenreNameNotEmpty(String name) {
