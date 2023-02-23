@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.ivandavid.spotify.enums.EntityName.TRACK;
 import static com.ivandavid.spotify.enums.SearchParamType.ID;
@@ -64,8 +65,8 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDTO updateTrack(Long id, TrackDTO dto) {
-        var genres = dto.getGenreIds().stream().map(genreService::getGenreEntityById).toList();
-        var track = new Track();
+        var genres = dto.getGenreIds().stream().map(genreService::getGenreEntityById).collect(Collectors.toList());
+        var track = trackRepository.findById(id).get();
         track.setId(id);
         track.setName(dto.getName());
         track.setDuration(dto.getDuration());
