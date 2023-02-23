@@ -85,6 +85,7 @@ public class GenreServiceImpl implements GenreService {
         return GenreDTO.fromEntity(genre);
     }
 
+
     @Transactional
     @Override
     public void deleteGenreById(Long id) {
